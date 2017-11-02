@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "author": "Veronika Uly",
   "license": "MIT",
-  "engines": "9.0.0",
+  "engines": {
+    "node": "9.0.0",
+    "npm": "3.5.2"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -9,7 +9,7 @@ var routes = require('./server/routes/index');
 var tasks = require('./server/routes/taskRouter');
 var lists = require('./server/routes/listRouter');
 
-var port = 3000;
+var port = process.env.PORT || 3000;
 var app = express();
 
 // Parsers for POST data
