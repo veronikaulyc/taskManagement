@@ -1,0 +1,72 @@
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+  <div class="container" *ngIf="task">
+    <form #taskForm = "ngForm">
+      <div class="form-group">
+    <button *ngIf="!isNew" (click)="save()" [disabled]="(!taskForm.form.valid || !taskForm.form.dirty)">Save</button>
+    <button  *ngIf="!isNew" (click)="markAsDone() " [disabled]="!taskForm.form.valid">Mark as done</button>
+    </div>
+    <div class="form-group">
+      <label for="name">Task name:</label> <input class="form-control" name='name' required
+    id="name"
+    [(ngModel)]="task.name" #name="ngModel"/>
+    <div [hidden]="name.valid || name.pristine"
+       class="alert alert-danger">
+    Name is required
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="priority">Priority:</label>
+    <select class="form-control" id='priority' name='priority'
+    required [(ngModel)]="task.priority">
+      <option *ngFor="let pr of priorities" [value]="pr">{{pr}}</option>
+  </select>
+  </div>
+  <div>
+    <label for="startDate">Start date:</label>
+    <date-picker name="startDate" mode="datetime" [(ngModel)]="task.startDate"  ></date-picker>
+  </div >
+  <div>
+    <label for="dueDate">Due date:</label>
+    <date-picker name="dueDate" mode="datetime" [(ngModel)]="task.dueDate"  ></date-picker>
+    <div [hidden]="(task.dueDate == null || task.startDate == null ||
+    task.dueDate > task.startDate)"
+       class="alert alert-danger">
+    Due date should be larger than the start date
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="executionTime">Execution Time:</label>
+    <div>
+     <input class="form-control3" id='executionTime' name='executionTime'
+     type="number" [(ngModel)]="task.executionTime"  #exTime="ngModel"/>
+    <select  class="form-control4" id='units' name='units' step="0.1"
+   [(ngModel)]="task.units"   #unit="ngModel">
+      <option *ngFor="let period of periods" [value]="period">{{period}}</option>
+  </select>
+  </div>
+  <div [hidden]="!( ( exTime.value || unit.value ) && !( exTime.value && unit.value ) )"
+     class="alert alert-danger">
+  Please choose values in both fields
+</div>
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label> <textarea class="form-control" rows="5"
+    id='description' name='description'
+    [(ngModel)]="task.description"></textarea>
+  </div>
+<div class="form-group">
+    <button  *ngIf="isNew" (click) ="createNew()"
+      [disabled]="(!taskForm.form.valid || !taskForm.form.dirty || task.dueDate < task.startDate
+      || ( ( exTime.value || unit.value ) && !( exTime.value && unit.value ) ))">
+        Add
+    </button>
+    <button *ngIf="!isNew" (click)="save()"
+      [disabled]="(!taskForm.form.valid || !taskForm.form.dirty ||task.dueDate < task.startDate
+      || ( ( exTime.value || unit.value ) && !( exTime.value && unit.value ) ))">
+      Save
+    </button>
+    <button (click)="taskForm.form.reset()">Reset</button>
+    <button (click)="goBack()">Back</button>
+</div>
+  </form>
+  </div>

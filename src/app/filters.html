@@ -1,0 +1,89 @@
+<task-search></task-search>
+<nav class="top" menuElement>
+  <div  class="dropdownBackground">
+    <span class="arrow"></span>
+  </div>
+
+  <ul class="cool">
+    <li (mouseenter)="handleEnter($event.target);" (mouseleave)="handleLeave($event.target)">
+      <span>Date Filters</span>
+      <ul class="dropdown filter">
+        <li>
+          <span>Dates:</span>
+          <div>
+          <label for="startDateFrom">Start date from:</label>
+          <date-picker id='startDateFrom' name="startDateFrom" mode="datetime" [(ngModel)]="startDateFrom">
+          </date-picker>
+          <label for="startDateTo">Start date to:</label>
+           <date-picker id='startDateTo' name="startDateTo" mode="datetime" [(ngModel)]="startDateTo ">
+           </date-picker>
+        </div>
+        <div>
+          <label for="dueDateFrom">Due date from:</label>
+           <date-picker id='dueDateFrom' name="dueDateFrom" mode="datetime" [(ngModel)]="dueDateFrom">
+           </date-picker>
+          <label for="dueDateTo">Due date to:</label>
+           <date-picker  id='dueDateTo' name="dueDateTo" mode="datetime" [(ngModel)]="dueDateTo">
+           </date-picker>
+        </div>
+        </li>
+      </ul>
+    </li>
+    <li (mouseenter)="handleEnter($event.target);" (mouseleave)="handleLeave($event.target)">
+      <span>Other Filters</span>
+      <ul class="dropdown filter">
+        <li>
+          <span>Done / Not Done</span>
+          <div>
+            <select [(ngModel)]="isDone" name="isDone" id="isDone">
+              <option selected value="Not Done">Not Done</option>
+              <option value="All">All</option>
+              <option value="Done">Done</option>
+            </select>
+          </div>
+        </li>
+        <li>
+          <span>Priority:</span>
+          <div *ngFor="let pr of priorities">
+              <input type="checkbox" id='priority' name='priority' value="" [(ngModel)]="pr.checked" />
+              <label for="priority">{{pr.priority}}</label>
+          </div>
+        </li>
+        <li *ngIf = "lists.length > 0">
+          <span>List Name:</span>
+          <div *ngFor="let l of lists">
+              <input type="checkbox" id='list' name='list' value="" [(ngModel)]="l.checked" />
+              <label for="list">{{l.list}}</label>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li (mouseenter)="handleEnter($event.target);" (mouseleave)="handleLeave($event.target)">
+      <span>Sort</span>
+      <ul class="dropdown sort">
+        <li>
+          <span><button name="name.1"  (click)="sortFunc($event)">Name (AZ)</button></span>
+        </li>
+        <li>
+          <span><button name="name.-1" (click)="sortFunc($event)">Name (ZA)</button></span>
+        </li>
+        <li>
+          <span><button name="dueDate.1" (click)="sortFunc($event)">Due Date (oldest)</button></span>
+        </li>
+        <li>
+          <span><button name="dueDate.-1" (click)="sortFunc($event)">Due Date (newest)</button></span>
+        </li>
+        <li>
+          <span><button name="priority.1" (click)="sortFunc($event)">Less Important</button></span>
+        </li>
+        <li>
+          <span><button name="priority.1" (click)="sortFunc($event)">More Important</button></span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<my-tasks [query]="query" [sort]="sort"
+  [queryVersion]="queryVersion" [sortVersion]="sortVersion">
+</my-tasks>

@@ -1,0 +1,22 @@
+
+<div>
+  <span>
+     <button (click)="saveAll()" class="menubutton">Save all</button>
+  </span>
+  <span *ngIf="tasks"> Count: {{tasks.length}} tasks from {{count}}
+  </span>
+</div>
+<ul class="tasks">
+    <li *ngFor="let task of tasks" [class.selected]="task === selectedTask"
+        (click)="onSelect(task)">
+      <span class="badge">
+       <button  *ngIf="(selectedTask && selectedTask === task)" (click)="gotoDetail()">View Details</button>
+     </span>
+      <input type="checkbox" [(ngModel)]="task.isDone" (click)="handleCheck($event,task)">
+      <span> {{task.name}}</span>
+      <button class="delete"
+            (click)="delete(task); $event.stopPropagation()">x
+      </button>
+
+    </li>
+</ul>
