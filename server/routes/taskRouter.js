@@ -2,10 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Tasks = require('../models/tasks');
+const config = require('./config'); // get our config file
 
 
 //connection to the database
-mongoose.connect('mongodb://localhost:27017/taskManagement', { useMongoClient: true });
+mongoose.connect(config.database, { useMongoClient: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
